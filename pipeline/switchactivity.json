@@ -1,0 +1,206 @@
+{
+	"name": "switchactivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Switch activity for copy or delete",
+				"type": "Switch",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@pipeline().parameters.Action",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "Copy",
+							"activities": [
+								{
+									"name": "Copy exclefile to onPrem SQLtable",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "adfdemo/excel/sampledatahockey.xlsx"
+										},
+										{
+											"name": "Destination",
+											"value": "dbo.@{'hockey'}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "SqlServerSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": " PlayerId",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "PlayerId",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Team",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Team",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "NameF",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "NameF",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "NameL",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "NameL",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Hometown",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Hometown",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Pos",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Pos",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "ds_Excel",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "OutputTable",
+											"type": "DatasetReference",
+											"parameters": {
+												"TableName": "hockey"
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "Delete",
+							"activities": [
+								{
+									"name": "Delete excel file folder",
+									"type": "Delete",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "ds_Excel",
+											"type": "DatasetReference"
+										},
+										"logStorageSettings": {
+											"linkedServiceName": {
+												"referenceName": "azureblobstorage_linkedservice",
+												"type": "LinkedServiceReference"
+											},
+											"path": "adfdemo/logfiles"
+										},
+										"enableLogging": true,
+										"storeSettings": {
+											"type": "AzureBlobStorageReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Action": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-07-18T11:09:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

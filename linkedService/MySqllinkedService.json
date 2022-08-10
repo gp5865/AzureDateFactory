@@ -1,0 +1,16 @@
+{
+	"name": "MySqllinkedService",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"connectionString": "server=PRIYANUSH;port=3306;database=db;user=priyanush;sslmode=1;usesystemtruststore=0",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiNTFjOWYyZC0wZTQxLTRhODgtOTAwMi04M2ZjMGVjZDFmZmUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "mypcselfhostedruntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

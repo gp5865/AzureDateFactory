@@ -1,0 +1,9 @@
+{
+	"name": "priyanushdatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1cf4f35a-4b16-4aad-8598-a9c55f2e97e4",
+		"tenantId": "05fda5ca-4e7c-46c9-9cfd-051272c2f879"
+	}
+}

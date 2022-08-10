@@ -1,0 +1,52 @@
+{
+	"name": "ds_Excel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azureblobstorage_linkedservice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "sampledatahockey",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "sampledatahockey.xlsx",
+				"folderPath": "excel",
+				"container": "adfdemo"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": " PlayerId",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "NameF",
+				"type": "String"
+			},
+			{
+				"name": "NameL",
+				"type": "String"
+			},
+			{
+				"name": "Hometown",
+				"type": "String"
+			},
+			{
+				"name": "Pos",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

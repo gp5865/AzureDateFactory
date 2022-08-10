@@ -1,0 +1,99 @@
+{
+	"name": "UnpivotDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_purchasedatadataDataset",
+						"type": "DatasetReference"
+					},
+					"name": "PurchaseOrder"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_pivotEmployee",
+						"type": "DatasetReference"
+					},
+					"name": "PivotEmployee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_dataflowoutputDataset",
+						"type": "DatasetReference"
+					},
+					"name": "UnPivotPurchaseorder"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dataflowoutputDataset",
+						"type": "DatasetReference"
+					},
+					"name": "UnPivotEmployee"
+				}
+			],
+			"transformations": [
+				{
+					"name": "unpivot1"
+				},
+				{
+					"name": "unpivot2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PO as string,",
+				"          Vendor as string,",
+				"          Apple as string,",
+				"          Mango as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PurchaseOrder",
+				"source(output(",
+				"          department as string,",
+				"          female as string,",
+				"          male as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PivotEmployee",
+				"PurchaseOrder unpivot(output(",
+				"          Fruits as string,",
+				"          TotalNoOfFruits as string",
+				"     ),",
+				"     ungroupBy(PO,",
+				"          Vendor),",
+				"     lateral: true,",
+				"     ignoreNullPivots: false) ~> unpivot1",
+				"PivotEmployee unpivot(output(",
+				"          gender as string,",
+				"          count as string",
+				"     ),",
+				"     ungroupBy(department),",
+				"     lateral: true,",
+				"     ignoreNullPivots: false) ~> unpivot2",
+				"unpivot1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['UnPivotPurchaseOrder.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> UnPivotPurchaseorder",
+				"unpivot2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['UnPivotEmployee.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          department,",
+				"          gender,",
+				"          count",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> UnPivotEmployee"
+			]
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "SSMSlinkedservice",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=PRIYANUSH\\MSSQLSERVER1;initial catalog=db;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0YjY3ZjdiMC03OWNhLTRmNmItYmFmYi0yMTMzYzc4Y2JmNzMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "mypcselfhostedruntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

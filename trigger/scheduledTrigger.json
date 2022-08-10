@@ -1,0 +1,25 @@
+{
+	"name": "scheduledTrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "SimpleCopy",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2022-07-21T12:43:00",
+				"endTime": "2022-07-21T12:50:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

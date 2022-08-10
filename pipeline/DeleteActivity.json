@@ -1,0 +1,42 @@
+{
+	"name": "DeleteActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delete demo folder",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "datasetFordeleteactivity",
+						"type": "DatasetReference"
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "azureblobstorage_linkedservice",
+							"type": "LinkedServiceReference"
+						},
+						"path": "adfdemo/logfiles"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-07-18T11:09:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
